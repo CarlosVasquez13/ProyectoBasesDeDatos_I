@@ -89,8 +89,8 @@ class SudokuUI(Frame):
             for j in range(9):
                 answer = self.game.puzzle[i][j]
                 if answer != 0:
-                    x = MARGIN + j * SIDE + SIDE / 2
-                    y = MARGIN + i * SIDE + SIDE / 2
+                    x = MARGIN + j * SIDE + SIDE // 2
+                    y = MARGIN + i * SIDE + SIDE // 2
                     original = self.game.start_puzzle[i][j]
                     color = "black" if answer == original else "sea green"
                     self.canvas.create_text(
