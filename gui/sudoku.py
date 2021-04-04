@@ -243,8 +243,9 @@ class SudokuGame(object):
         )
 
 
-if __name__ == '__main__':
-    board_name = parse_arguments()
+def open_sudoku():
+    board_name = 'debug'
+    # parse_arguments()
 
     with open('%s.sudoku' % board_name, 'r') as boards_file:
         game = SudokuGame(boards_file)
@@ -254,3 +255,16 @@ if __name__ == '__main__':
         SudokuUI(root, game)
         root.geometry("%dx%d" % (WIDTH, HEIGHT + 40))
         root.mainloop()
+
+# if __name__ == '__main__':
+#     board_name = 'debug'
+#     # parse_arguments()
+
+#     with open('%s.sudoku' % board_name, 'r') as boards_file:
+#         game = SudokuGame(boards_file)
+#         game.start()
+
+#         root = Tk()
+#         SudokuUI(root, game)
+#         root.geometry("%dx%d" % (WIDTH, HEIGHT + 40))
+#         root.mainloop()
