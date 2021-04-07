@@ -1,12 +1,25 @@
 import argparse
+import configparser
 
 from tkinter import Tk, Canvas, Frame, Button, BOTH, TOP, BOTTOM
+from db.ConfigConnection import ConfigConnection
+from db.MySQLEngine import MySQLEngine
+from db.querys import Querys
 
 BOARDS = ['debug', 'n00b', 'l33t', 'error']  # Available sudoku boards
 MARGIN = 20  # Pixels around the board
 SIDE = 50  # Width of every board cell.
 WIDTH = HEIGHT = MARGIN * 2 + SIDE * 9  # Width and height of the whole board
 
+configDB = configparser.ConfigParser()
+configDB.read('Config/config.ini')
+
+db = configDB['mysql']
+
+config = ConfigConnection(db['host'], db['port'], db['user'], db['password'], db['database'])
+
+
+engine = MySQLEngine(config)
 
 class SudokuError(Exception):
     """
@@ -188,7 +201,9 @@ class SudokuBoard(object):
 
         if len(board) != 9:
             raise SudokuError("Each sudoku puzzle must be 9 lines long")
-        return board
+        
+        test_board = cargar_tablero_data()
+        return test_board
 
 
 class SudokuGame(object):
@@ -256,6 +271,21 @@ def open_sudoku():
         root.geometry("%dx%d" % (WIDTH, HEIGHT + 40))
         root.mainloop()
 
+
+def cargar_tablero_data():
+    print("cargando tablero..")
+    query = Querys.cargar_tablero()
+    result = engine.select(query)
+
+    tablero = []
+    for item in result:
+        tableroFila =  {"id":item[0], "tableroId": item[1], "fila": item[2], "valor": item[3], "posicionX": item[4], "posicionY": item[5]}
+        line = item[3].strip()
+        
+        tablero.append([])
+        for c in line:            
+            tablero[-1].append(int(c))
+    return tablero
 # if __name__ == '__main__':
 #     board_name = 'debug'
 #     # parse_arguments()

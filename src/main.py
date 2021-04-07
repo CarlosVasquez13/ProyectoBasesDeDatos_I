@@ -1,4 +1,4 @@
-from sudoku import open_sudoku
+from sudoku import open_sudoku, cargar_tablero_data
 from tkinter import *
 import configparser
 from db.ConfigConnection import ConfigConnection
@@ -15,9 +15,6 @@ config = ConfigConnection(db['host'], db['port'], db['user'], db['password'], db
 
 
 engine = MySQLEngine(config)
-
-query = Querys.cargar_tablero()
-result = engine.select(query)
 
 splash_root = Tk()
 splash_root.title("Splash Screen!!")
@@ -57,12 +54,25 @@ def main_window():
     main_label.pack(pady=20)
 
 def main_sudoku():
+    # query = Querys.cargar_tablero()
+    # result = engine.select(query)
+
+    # listItems = []
+    # for item in result:
+    #     tableroFila =  {"id":item[0], "tableroId": item[1], "fila": item[2], "valor": item[3], "posicionX": item[4], "posicionY": item[5]}
+    #     line = item[3].strip()
+        
+    #     listItems.append([])
+    #     for c in line:            
+    #         listItems[-1].append(int(c))
+
+    # cargar_tablero_data()
     # open window game
     open_sudoku()
     pass
 
 # splash screen timer
-splash_root.after(3000, main_window)
+splash_root.after(1000, main_window)
 
 
 mainloop()
