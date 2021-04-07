@@ -6,7 +6,7 @@ from ConfigConnection import ConfigConnection
 from MySQLEngine import MySQLEngine
 
 configDB = configparser.ConfigParser()
-configDB.read('Config/config.ini')
+configDB.read('../Config/config.ini')
 
 db = configDB['mysql']
 
@@ -22,9 +22,7 @@ result = engine.select(query)
 listItems = []
 for item in result:
     tableroFila =  {"id":item[0], "tableroId": item[1], "fila": item[2], "valor": item[3], "posicionX": item[4], "posicionY": item[5]}
-    print(tableroFila)
     listItems.append(tableroFila)
-    print(item)
 
 print(listItems)
 

@@ -1,7 +1,23 @@
 from sudoku import open_sudoku
 from tkinter import *
+import configparser
+from db.ConfigConnection import ConfigConnection
+from db.MySQLEngine import MySQLEngine
+
+configDB = configparser.ConfigParser()
+configDB.read('Config/config.ini')
+
+db = configDB['mysql']
+
+config = ConfigConnection(db['host'], db['port'], db['user'], db['password'], db['database'])
 
 
+engine = MySQLEngine(config)
+
+query = """SELECT td.id, td.tablero_id, td.fila, td.valor, td.posicion_x, td.posicion_y FROM sudoku.tablero t
+        INNER JOIN tablerodetalle td ON td.tablero_id = t.id;"""
+result = engine.select(query)
+print(result)
 
 splash_root = Tk()
 splash_root.title("Splash Screen!!")
