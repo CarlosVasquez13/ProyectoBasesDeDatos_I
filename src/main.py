@@ -29,7 +29,7 @@ screen_height = splash_root.winfo_screenheight()
 
 x = (screen_width // 2) - (app_width // 2)
 y = (screen_height // 2) - (app_height // 2)
-print(screen_height, screen_width)
+
 
 
 splash_root.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')

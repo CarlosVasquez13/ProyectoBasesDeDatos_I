@@ -201,8 +201,8 @@ class SudokuBoard(object):
 
         if len(board) != 9:
             raise SudokuError("Each sudoku puzzle must be 9 lines long")
-        
-        test_board = cargar_tablero_data()
+        #Obtener id tablero a cargar
+        test_board = cargar_tablero_data(2)
         return test_board
 
 
@@ -272,9 +272,9 @@ def open_sudoku():
         root.mainloop()
 
 
-def cargar_tablero_data():
+def cargar_tablero_data(tableroId):
     print("cargando tablero..")
-    query = Querys.cargar_tablero()
+    query = Querys.cargar_tablero(tableroId)
     result = engine.select(query)
 
     tablero = []
