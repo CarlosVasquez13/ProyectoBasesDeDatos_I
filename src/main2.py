@@ -1,6 +1,6 @@
 from tkinter import *
 import os
- 
+from funciones import *
 
  # Splash screen 
 splash_root = Tk()
@@ -82,7 +82,12 @@ def register_user():
  
     username_info = username.get()
     password_info = password.get()
- 
+
+    #desarrollo
+    #Registrar usuario en base de datos
+    print(username_info)
+    print(password_info)
+
     file = open(username_info, "w")
     file.write(username_info + "\n")
     file.write(password_info)
@@ -98,23 +103,29 @@ def register_user():
 def login_verify():
     username1 = username_verify.get()
     password1 = password_verify.get()
-    print(username1)
-    print(password1)
     username_login_entry.delete(0, END)
     password_login_entry.delete(0, END)
  
-    list_of_files = os.listdir()
-    if username1 in list_of_files:
-        file1 = open(username1, "r")
-        verify = file1.read().splitlines()
-        if password1 in verify:
-            login_sucess()
- 
-        else:
-            password_not_recognised()
- 
+    #VERIFICAR CON DATOS DE LA BASE DE DATOS
+    response = user_login(username1, password1)
+
+    if response.ok:
+        login_sucess()
+
     else:
-        user_not_found()
+        password_not_recognised()
+    # list_of_files = os.listdir()
+    # if username1 in list_of_files:
+    #     file1 = open(username1, "r")
+    #     verify = file1.read().splitlines()
+    #     if password1 in verify:
+    #         login_sucess()
+ 
+    #     else:
+    #         password_not_recognised()
+ 
+    # else:
+    #     user_not_found()
  
 # Designing popup for login success
  
@@ -175,11 +186,12 @@ def main_account_screen():
     Button(text="Register", height="2", width="30", command=register).pack()
  
     main_screen.mainloop()
+
  
 def splash_screen():
     global splash_screen
     splash_screen = Tk()
-    splash_screen.geometry
+    #splash_screen.geometry
 
 
 splash_root.after(1000, main_account_screen)

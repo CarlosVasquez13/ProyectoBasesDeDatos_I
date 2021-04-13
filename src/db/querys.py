@@ -9,3 +9,7 @@ class Querys:
             WHERE t.id = """ + str(tableroID)
         print(query)
         return query
+        
+ 	# def login():
+ 	# 	query = """SELECT * FROM usuario WHERE nombre_usuario = carlos"""
+ 	# 	return query
