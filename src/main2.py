@@ -1,6 +1,23 @@
 from tkinter import *
 import os
  
+
+ # Splash screen 
+splash_root = Tk()
+splash_root.title("Splash Screen!!")
+app_width = 500
+app_height = 500
+
+screen_width = splash_root.winfo_screenwidth()
+screen_height = splash_root.winfo_screenheight()
+
+x = (screen_width // 2) - (app_width // 2)
+y = (screen_height // 2) - (app_height // 2)
+splash_root.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
+splash_label = Label(splash_root, text="Splash Screen", font=("Helvetica", 18))
+splash_label.pack(pady=20)
+
+
 # Designing window for registration
  
 def register():
@@ -146,6 +163,7 @@ def delete_user_not_found_screen():
 # Designing Main(first) window
  
 def main_account_screen():
+    splash_root.destroy()
     global main_screen
     main_screen = Tk()
     main_screen.geometry("300x250")
@@ -158,5 +176,14 @@ def main_account_screen():
  
     main_screen.mainloop()
  
- 
-main_account_screen()
+def splash_screen():
+    global splash_screen
+    splash_screen = Tk()
+    splash_screen.geometry
+
+
+splash_root.after(1000, main_account_screen)
+
+
+mainloop()
+#main_account_screen()
