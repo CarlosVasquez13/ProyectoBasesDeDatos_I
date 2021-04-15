@@ -9,7 +9,10 @@ class Querys:
             WHERE t.id = """ + str(tableroID)
         print(query)
         return query
-        
+	
+	# def cargar_tableros_disponibles():
+	# 	query = "SELECT id, nombre, jugadas_disponibles as ID from tablero"
+	# 	return query
  	# def login():
  	# 	query = """SELECT * FROM usuario WHERE nombre_usuario = carlos"""
  	# 	return query
