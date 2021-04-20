@@ -179,30 +179,30 @@ class SudokuBoard(object):
     """
     Sudoku Board representation
     """
-    def __init__(self, board_file):
-        self.board = self.__create_board(board_file)
+    def __init__(self, id):
+        self.board = self.__create_board(id)
 
-    def __create_board(self, board_file):
-        board = []
-        for line in board_file:
-            line = line.strip()
-            if len(line) != 9:
-                raise SudokuError(
-                    "Each line in the sudoku puzzle must be 9 chars long."
-                )
-            board.append([])
+    def __create_board(self, id):
+        # board = []
+        # for line in board_file:
+        #     line = line.strip()
+        #     if len(line) != 9:
+        #         raise SudokuError(
+        #             "Each line in the sudoku puzzle must be 9 chars long."
+        #         )
+        #     board.append([])
 
-            for c in line:
-                if not c.isdigit():
-                    raise SudokuError(
-                        "Valid characters for a sudoku puzzle must be in 0-9"
-                    )
-                board[-1].append(int(c))
+        #     for c in line:
+        #         if not c.isdigit():
+        #             raise SudokuError(
+        #                 "Valid characters for a sudoku puzzle must be in 0-9"
+        #             )
+        #         board[-1].append(int(c))
 
-        if len(board) != 9:
-            raise SudokuError("Each sudoku puzzle must be 9 lines long")
-        #Obtener id tablero a cargar
-        test_board = cargar_tablero_data(2)
+        # if len(board) != 9:
+        #     raise SudokuError("Each sudoku puzzle must be 9 lines long")
+        # #Obtener id tablero a cargar
+        test_board = cargar_tablero_data(id)
         return test_board
 
 
@@ -211,9 +211,9 @@ class SudokuGame(object):
     A Sudoku game, in charge of storing the state of the board and checking
     whether the puzzle is completed.
     """
-    def __init__(self, board_file):
-        self.board_file = board_file
-        self.start_puzzle = SudokuBoard(board_file).board
+    def __init__(self, id):
+        self.board_file = id
+        self.start_puzzle = SudokuBoard(id).board
 
     def start(self):
         self.game_over = False
@@ -258,12 +258,13 @@ class SudokuGame(object):
         )
 
 
-def open_sudoku():
+def open_sudoku(id):
+    
     board_name = 'debug'
     # parse_arguments()
 
     with open('%s.sudoku' % board_name, 'r') as boards_file:
-        game = SudokuGame(boards_file)
+        game = SudokuGame(id)
         game.start()
 
         root = Tk()
@@ -273,7 +274,7 @@ def open_sudoku():
 
 
 def cargar_tablero_data(tableroId):
-    print("cargando tablero..")
+    print("Cargando tablero No.: {}".format(id))
     query = Querys.cargar_tablero(tableroId)
     result = engine.select(query)
 

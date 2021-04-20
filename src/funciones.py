@@ -38,7 +38,8 @@ def cargar_tableros_disponibles():
 	for item in result:
 		tablero = {"id": item[0], "nombre": item[1], "jugadas diponibles" : item[2]}
 		tableros.append(tablero)
-	print(tableros)
+	
+	return tableros
 
 # args = ['carlos', 'vasquez','123123123','123','carlos', False, '']
 # resulta = register_user_db(args)

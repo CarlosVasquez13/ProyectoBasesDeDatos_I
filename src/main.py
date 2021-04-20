@@ -68,7 +68,7 @@ def main_sudoku():
 
     # cargar_tablero_data()
     # open window game
-    open_sudoku()
+    open_sudoku(1)
     pass
 
 # splash screen timer

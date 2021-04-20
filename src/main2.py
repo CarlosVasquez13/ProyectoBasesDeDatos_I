@@ -1,7 +1,7 @@
 from tkinter import *
 import os
 from funciones import *
-from sudoku import open_sudoku
+#from sudoku import open_sudoku
 from sudoku import open_sudoku, cargar_tablero_data
 
  # Splash screen 
@@ -138,6 +138,7 @@ def register_user():
 # Implementing event on login button 
  
 def login_verify():
+    global user_sesion
     username1 = username_verify.get()
     password1 = password_verify.get()
     username_login_entry.delete(0, END)
@@ -145,6 +146,7 @@ def login_verify():
  
     #VERIFICAR CON DATOS DE LA BASE DE DATOS
     response = user_login([username1, password1, '', False, ''])
+    user_sesion = response.data
 
     if response.ok:
         login_sucess()
@@ -168,7 +170,8 @@ def login_verify():
 def login_sucess():
     main_screen.destroy()
     #open_sudoku()
-    second_main_screen()
+    #Ya logueado mostrar tableros disponibles
+    game_option_screen()
     global login_success_screen
     login_success_screen = Toplevel(login_screen)
     login_success_screen.title("Success")
@@ -218,12 +221,12 @@ def main_account_screen():
     global main_screen
     main_screen = Tk()
     main_screen.geometry("300x250")
-    main_screen.title("Account Login")
+    main_screen.title("Sesión")
     Label(text="Select Your Choice", bg="blue", width="300", height="2", font=("Calibri", 13)).pack()
     Label(text="").pack()
-    Button(text="Login", height="2", width="30", command = login).pack()
+    Button(text="Iniciar Sesión", height="2", width="30", command = login).pack()
     Label(text="").pack()
-    Button(text="Register", height="2", width="30", command=register).pack()
+    Button(text="Registrarse", height="2", width="30", command=register).pack()
  
     main_screen.mainloop()
 
@@ -246,9 +249,50 @@ def splash_screen():
     splash_screen = Tk()
     #splash_screen.geometry
 
+def game_option_screen():
+    global game_option_screen
+    game_option_screen = Tk()
+    game_option_screen.geometry("300x250")
+    game_option_screen.title("Inicio")
+    Label(text="Select Your Choice", bg="blue", width="300", height="2", font=("Calibri", 13)).pack()
+    Label(text="").pack()
+    Button(text="Nuevo juego", height="2", width="30", command = tablero_option_screen).pack()
+    Label(text="").pack()
+    Button(text="juegos guardados", height="2", width="30", command=register).pack()
+ 
+    game_option_screen.mainloop()
+
+def prueba(id):
+    print("USER ID: {}".format(user_sesion))
+    open_sudoku(id)
+
+def tablero_option_screen():
+    global tablero_option_screen
+    #tablero_option_screen = Toplevel(game_option_screen)
+    resultado = cargar_tableros_disponibles()
+    
+
+    tablero_option_screen = Tk()
+
+    tablero_option_screen.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
+    nombre = "tablero name" 
+    
+    index = 0
+    for tablero in resultado:
+        Label(tablero_option_screen, text="Nombre tablero: ").grid(pady=5, row=index, column=0)
+        Label(tablero_option_screen, text="Jugadas Disponibles: :").grid( pady=5, row=index+1, column=0)
+
+        Label(tablero_option_screen, text=tablero["nombre"]).grid(padx=5, row=index, column=1)
+        Label(tablero_option_screen, text=tablero["jugadas diponibles"]).grid(padx=5, row=index+1, column=1)
+
+        Button(tablero_option_screen, text="Jugar tablero {}".format(tablero["nombre"]), width=50, command = lambda id=tablero['id']: prueba(id)).grid(padx=10, pady=10, row=index+2, column=0, columnspan=2)
+        
+        index += 4
+
+    tablero_option_screen.mainloop()
 
 splash_root.after(1000, main_account_screen)
 
-
+#tablero_option_screen()
 mainloop()
 #main_account_screen()
